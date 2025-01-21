@@ -1,13 +1,14 @@
-import sys
-import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import detect  # Importar rutas desde el módulo `api`
 
-# Añadir la raíz del proyecto al PYTHONPATH
-current_dir = os.path.dirname(os.path.abspath(__file__))  # Ruta de `main.py`
-project_root = os.path.abspath(os.path.join(current_dir, "../.."))  # Raíz del proyecto
-sys.path.append(project_root)
+# Importar configuración primero
+from ..config import get_project_root
+
+# Obtener la ruta raíz del proyecto
+get_project_root()
+
+# Ahora importar las rutas
+from .routes import detect
 
 app = FastAPI(
     title="Logo Detection API",
@@ -26,14 +27,3 @@ app.add_middleware(
 
 # Rutas
 app.include_router(detect.router, prefix="/api/v1/detect", tags=["detect"])
-
-
-
-
-
-
-    
-
-
-
-
