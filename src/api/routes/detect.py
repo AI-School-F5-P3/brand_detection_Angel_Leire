@@ -1,15 +1,13 @@
-from fastapi import APIRouter, UploadFile, File
-from ..schemas.requests import DetectionRequest
-from ..schemas.responses import DetectionResponse
-from ..services.detection import DetectionService
+from fastapi import APIRouter, UploadFile, Form
+from ..services.video_processor import process_video  # Import desde `services`
 
 router = APIRouter()
 
-@router.post("/video", response_model=DetectionResponse)
-async def detect_logos_in_video(
-    file: UploadFile = File(...),
-    conf_threshold: float = 0.25
-):
-    detection_service = DetectionService()
-    result = await detection_service.process_video(file, conf_threshold)
-    return result
+@router.post("/video")
+async def detect_from_video(file: UploadFile, thresholds: str = Form(...)):
+    """
+    Procesa un video subido y retorna estadísticas de detección de logos.
+    """
+    thresholds_dict = eval(thresholds)  # Convertir string a diccionario
+    stats = await process_video(file, thresholds_dict)
+    return stats

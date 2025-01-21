@@ -14,8 +14,10 @@ class LogoDetector:
         weights_path: ruta al modelo entrenado (si existe)
         data_yaml: ruta al archivo data.yaml para entrenamiento
         """
-        self.model = YOLO('yolov8n.pt')  # Comenzar con modelo pre-entrenado
+        self.model = YOLO(weights_path or 'yolov8n.pt')  # Modelo preentrenado
         self.data_yaml = data_yaml
+        self.db_path = "src/data/database/detections.db"  # Ruta a la base de datos
+        self.setup_database()
         
         # Imprimir la ruta actual para debugging
         print(f"Directorio actual: {os.getcwd()}")
