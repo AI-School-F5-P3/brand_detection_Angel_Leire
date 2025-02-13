@@ -188,4 +188,4 @@ Para preguntas o sugerencias, por favor abre un issue en el repositorio.
 
 ## Autores
 
-- Leire y equipo (Pair Programming).
+- Leire y Ángel (Pair Programming).
